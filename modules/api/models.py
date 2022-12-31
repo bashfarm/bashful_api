@@ -131,6 +131,9 @@ StableDiffusionImg2ImgScriptProcessingAPI = PydanticModelGenerator(
     [{"key": "script_name", "type": str, "default": ""}, {"key": "script_args", "type": list, "default": []}, {"key": "sampler_index", "type": str, "default": "Euler"}, {"key": "init_images", "type": list, "default": None}, {"key": "denoising_strength", "type": float, "default": 0.75}, {"key": "mask", "type": str, "default": None}, {"key": "include_init_images", "type": bool, "default": False, "exclude" : True}]
 ).generate_model()
 
+class GetScriptsResponse(BaseModel):
+    scripts: List[str] = Field(title="Scripts", description="The scripts for the given action txt2img and img2img.")
+
 class TextToImageScriptResponse(BaseModel):
     images: List[str] = Field(title="Images", description="The generated images in base64 format.")
 

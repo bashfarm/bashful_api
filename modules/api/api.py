@@ -104,6 +104,8 @@ class Api:
         self.add_api_route("/sdapi/v1/prompt-styles", self.get_promp_styles, methods=["GET"], response_model=List[PromptStyleItem])
         self.add_api_route("/sdapi/v1/artist-categories", self.get_artists_categories, methods=["GET"], response_model=List[str])
         self.add_api_route("/sdapi/v1/artists", self.get_artists, methods=["GET"], response_model=List[ArtistItem])
+        self.add_api_route("/sdapi/v1/txt2img-scripts", self.get_txt2img_scripts, methods=["GET"])
+        self.add_api_route("/sdapi/v1/img2img-scripts", self.get_img2img_scripts, methods=["GET"])
 
     def add_api_route(self, path: str, endpoint, **kwargs):
         if shared.cmd_opts.api_auth:
@@ -208,6 +210,23 @@ class Api:
             result = run_extras(extras_mode=1, image="", input_dir="", output_dir="", **reqDict)
 
         return ExtrasBatchImagesResponse(images=list(map(encode_pil_to_base64, result[0])), html_info=result[1])
+
+    def get_txt2img_scripts(self):
+        if scripts.scripts_txt2img.scripts == []:
+            scripts.scripts_txt2img.initialize_scripts(False)
+            ui.create_ui()
+        return GetScriptsResponse(scripts=[script.title() for script in scripts.scripts_txt2img.selectable_scripts])
+        ...
+        # print(scripts.scripts_txt2img.selectable_scripts)
+
+        # return scripts.scripts_txt2img.selectable_scripts
+
+    def get_img2img_scripts(self):
+        if scripts.scripts_img2img.scripts == []:
+            scripts.scripts_img2img.initialize_scripts(False)
+            ui.create_ui()
+
+        return GetScriptsResponse(scripts=[script.title() for script in scripts.scripts_img2img.selectable_scripts])
 
     def text2img_script_api(self, txt2img_script_req: StableDiffusionTxt2ImgScriptProcessingAPI):
         # Initialize scripts (if necessary)
