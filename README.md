@@ -1,3 +1,5 @@
+# Bashful.ai stable diffusion server/admin GUI.  The true engineers here are AUTOMATIC and contributors investing time, money, talent, passion, in to the UI/API in a wild time where it was plain hard to even read how stable diffusion worked.  This is an open source project now meant to build on top of there work, but us as the maintainers.  This codebase powers Bashful and all Bashful.ai projects powered by Stable diffusion.  
+____ 
 # Stable Diffusion web UI
 A browser interface based on Gradio library for Stable Diffusion.
 
