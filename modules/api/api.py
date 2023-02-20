@@ -143,7 +143,7 @@ class Api:
         self.add_api_route("/sdapi/v1/hypernetworks", self.get_hypernetworks, methods=["GET"], response_model=List[HypernetworkItem])
         self.add_api_route("/sdapi/v1/face-restorers", self.get_face_restorers, methods=["GET"], response_model=List[FaceRestorerItem])
         self.add_api_route("/sdapi/v1/realesrgan-models", self.get_realesrgan_models, methods=["GET"], response_model=List[RealesrganItem])
-        self.add_api_route("/sdapi/v1/prompt-styles", self.get_promp_styles, methods=["GET"], response_model=List[PromptStyleItem])
+        self.add_api_route("/sdapi/v1/prompt-styles", self.get_prompt_styles, methods=["GET"], response_model=List[PromptStyleItem])
         self.add_api_route("/sdapi/v1/artist-categories", self.get_artists_categories, methods=["GET"], response_model=List[str])
         self.add_api_route("/sdapi/v1/artists", self.get_artists, methods=["GET"], response_model=List[ArtistItem])
         self.add_api_route("/sdapi/v1/txt2img-scripts", self.get_txt2img_scripts, methods=["GET"])
@@ -494,6 +494,7 @@ class Api:
     def get_realesrgan_models(self):
         return [{"name":x.name,"path":x.data_path, "scale":x.scale} for x in get_realesrgan_models(None)]
 
+
     def get_prompt_styles(self):
         styleList = []
         for k in shared.prompt_styles.styles:
@@ -501,6 +502,13 @@ class Api:
             styleList.append({"name":style[0], "prompt": style[1], "negative_prompt": style[2]})
 
         return styleList
+
+    def get_artists_categories(self):
+        return shared.artist_db.cats
+
+    def get_artists(self):
+        return [{"name":x[0], "score":x[1], "category":x[2]} for x in shared.artist_db.artists]
+
 
     def get_embeddings(self):
         db = sd_hijack.model_hijack.embedding_db
