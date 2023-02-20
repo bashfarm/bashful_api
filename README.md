@@ -6,7 +6,11 @@
 We see this code as 2 things
 * a way to communicate with the AI - (It's an application programming interface...API)
 * a way to grow the AI - (It's an AI admin interface)
-* 
+
+
+# Installation
+To install what you need, you must have python and git installed.  I won't be going over that here, but once you have this code downloaded.  Just run
+* `start_server.sh`
 ____ 
 # Stable Diffusion web UI
 A browser interface based on Gradio library for Stable Diffusion.
